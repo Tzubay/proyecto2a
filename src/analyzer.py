@@ -22,19 +22,53 @@ def estimate_delay_cause(row):
     return "Retraso probablemente asociado a " + ", ".join(causes)
 
 
-def calculate_average_delay(delays):
-    delay_values = []
+def extract_delay_minutes_from_flight(flight):
+    possible_fields = [
+        "dep_delay",
+        "arr_delay",
+        "delay",
+        "delayed"
+    ]
 
-    for delay in delays:
-        dep_delay = delay.get("dep_delay")
+    for field in possible_fields:
+        value = flight.get(field)
 
-        if dep_delay is not None:
+        if value is not None:
             try:
-                delay_values.append(float(dep_delay))
-            except ValueError:
+                return float(value)
+            except (ValueError, TypeError):
                 pass
 
-    if not delay_values:
-        return 0
+    status = str(flight.get("status", "")).lower()
 
-    return sum(delay_values) / len(delay_values)
+    if "delay" in status or "delayed" in status:
+        return 1
+
+    return 0
+
+
+def count_delayed_flights(delays, schedules):
+    delay_values = []
+
+    # Primero usamos el endpoint de delays si trae algo
+    for delay in delays:
+        minutes = extract_delay_minutes_from_flight(delay)
+
+        if minutes > 0:
+            delay_values.append(minutes)
+
+    # Después revisamos schedules, porque ahí también puede venir info útil
+    for flight in schedules:
+        minutes = extract_delay_minutes_from_flight(flight)
+
+        if minutes > 0:
+            delay_values.append(minutes)
+
+    total_delayed = len(delay_values)
+
+    if total_delayed == 0:
+        return 0, 0
+
+    average_delay = sum(delay_values) / total_delayed
+
+    return total_delayed, average_delay

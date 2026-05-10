@@ -46,6 +46,9 @@ async def analyze_airport(session, airport):
         weather_task,
         air_quality_task
     )
+#    if schedules:
+#        print(f"\nEjemplo de schedule para {airport_iata}:")
+#        print(schedules[0])
 
     row = build_airport_row(
         airport=airport,
@@ -75,6 +78,12 @@ async def main():
     async with aiohttp.ClientSession() as session:
         airports = await get_airports_by_country(session, country_code)
 
+    #    print("\nEjemplo de aeropuerto recibido por AirLabs:")
+    #    if airports:
+    #        print(airports[0])
+    #    else:
+    #        print("AirLabs devolvió una lista vacía.")
+
         if not airports:
             print("No se encontraron aeropuertos para ese país.")
             return
@@ -96,6 +105,8 @@ async def main():
 
     df = pd.DataFrame(rows)
     df = clean_dataframe(df)
+
+    df = df[df["total_flights"] > 0]
 
     output_path = "data/processed/analisis_retrasos_ambientales.csv"
     df.to_csv(output_path, index=False)

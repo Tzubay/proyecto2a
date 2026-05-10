@@ -1,17 +1,30 @@
 import pandas as pd
 from datetime import datetime
-from src.analyzer import estimate_delay_cause, calculate_average_delay
+from src.analyzer import estimate_delay_cause, count_delayed_flights
 
 
 def build_airport_row(airport, delays, schedules, weather, air_quality):
     airport_iata = airport.get("iata_code")
-    airport_name = airport.get("name")
-    city = airport.get("city") or airport.get("city_name") or "Desconocida"
-    region = airport.get("state") or airport.get("region") or city
+    airport_name = airport.get("name") or airport_iata
+
+    city = (
+        airport.get("city")
+        or airport.get("city_name")
+        or airport.get("municipality")
+        or airport_name
+        or "Desconocida"
+    )
+
+    region = (
+        airport.get("state")
+        or airport.get("region")
+        or airport.get("province")
+        or airport.get("subdivision")
+        or city
+    )
 
     total_flights = len(schedules)
-    total_delays = len(delays)
-    average_delay = calculate_average_delay(delays)
+    total_delays, average_delay = count_delayed_flights(delays, schedules)
 
     delay_percent = 0
 
