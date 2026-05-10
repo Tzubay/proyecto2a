@@ -2,6 +2,8 @@ import asyncio
 import aiohttp
 import pandas as pd
 import os
+from src.flight_report import build_flight_rows, summarize_flight_events
+from src.airport_metadata import get_airport_metadata
 
 from src.countries import get_country_code
 from src.airlabs_api import (
@@ -31,7 +33,7 @@ async def analyze_airport(session, airport):
     lon = airport.get("lng")
 
     if not airport_iata or not lat or not lon:
-        return None
+        return None, []
 
     print(f"Analizando aeropuerto {airport_iata}...")
 
@@ -46,11 +48,8 @@ async def analyze_airport(session, airport):
         weather_task,
         air_quality_task
     )
-#    if schedules:
-#        print(f"\nEjemplo de schedule para {airport_iata}:")
-#        print(schedules[0])
 
-    row = build_airport_row(
+    airport_row = build_airport_row(
         airport=airport,
         delays=delays,
         schedules=schedules,
@@ -58,7 +57,33 @@ async def analyze_airport(session, airport):
         air_quality=air_quality
     )
 
-    return row
+    metadata = get_airport_metadata(airport_iata)
+
+    city = (
+        airport.get("city")
+        or airport.get("city_name")
+        or metadata.get("city")
+        or airport.get("name")
+        or "Desconocida"
+    )
+
+    region = (
+        airport.get("state")
+        or airport.get("region")
+        or metadata.get("region")
+        or city
+    )
+
+    flight_rows = build_flight_rows(
+        airport=airport,
+        schedules=schedules,
+        weather=weather,
+        air_quality=air_quality,
+        city=city,
+        region=region
+    )
+
+    return airport_row, flight_rows
 
 
 async def main():
@@ -95,13 +120,20 @@ async def main():
         for airport in airports:
             tasks.append(analyze_airport(session, airport))
 
-        rows = await asyncio.gather(*tasks)
+        results = await asyncio.gather(*tasks)
 
-    rows = [row for row in rows if row is not None]
+    rows = []
+    flight_rows = []
 
-    if not rows:
-        print("No se pudieron procesar aeropuertos válidos.")
-        return
+    for airport_row, airport_flight_rows in results:
+        if airport_row is not None:
+            rows.append(airport_row)
+
+        flight_rows.extend(airport_flight_rows)
+
+        if not rows:
+            print("No se pudieron procesar aeropuertos válidos.")
+            return
 
     df = pd.DataFrame(rows)
     df = clean_dataframe(df)
@@ -110,6 +142,49 @@ async def main():
 
     output_path = "data/processed/analisis_retrasos_ambientales.csv"
     df.to_csv(output_path, index=False)
+
+    df_flights = pd.DataFrame(flight_rows)
+
+    flight_output_path = "data/processed/vuelos_retrasados_cancelados.csv"
+
+    if not df_flights.empty:
+        df_flights.to_csv(flight_output_path, index=False)
+
+        print("\nVuelos retrasados o cancelados:")
+        pd.set_option("display.max_columns", None)
+        pd.set_option("display.width", 200)
+
+        print(
+            df_flights[
+                [
+                    "flight_iata",
+                    "airline_iata",
+                    "dep_iata",
+                    "arr_iata",
+                    "event_type",
+                    "delay_minutes",
+                    "status",
+                    "dep_time",
+                    "dep_estimated",
+                    "dep_actual",
+                    "visibility",
+                    "wind_speed",
+                    "rain_1h",
+                    "weather_description",
+                    "city",
+                    "region",
+                    "probable_cause"
+                ]
+            ]
+        )
+
+        print("\nResumen de vuelos afectados por causa probable:")
+        event_summary = summarize_flight_events(df_flights)
+        print(event_summary)
+
+        print(f"\nArchivo de vuelos generado: {flight_output_path}")
+    else:
+        print("\nNo se encontraron vuelos retrasados o cancelados en esta consulta.")
 
     print("\nDatos unificados:")
     print(df)
