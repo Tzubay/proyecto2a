@@ -1,35 +1,67 @@
+# -*- coding: utf-8 -*-
+"""
+main.py — Analizador de tráfico aéreo y condiciones ambientales
+===============================================================
+Ejecución con MPI (recomendada):
+    mpiexec -n 4 python main.py
+
+Ejecución normal:
+    python main.py
+"""
+
+import sys
+import io
 import asyncio
 import aiohttp
 import pandas as pd
 import os
-from src.flight_report import build_flight_rows, summarize_flight_events
-from src.airport_metadata import get_airport_metadata
-from src.gpu_analysis import apply_gpu_analysis
 
-from src.countries import get_country_code
-from src.airlabs_api import (
+# Forzar UTF-8 en la consola de Windows
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+
+from src.flight_report    import build_flight_rows, summarize_flight_events
+from src.airport_metadata import get_airport_metadata
+from src.countries        import get_country_code
+from src.airlabs_api      import (
     get_airports_by_country,
     get_delays_by_airport,
-    get_schedules_by_airport
+    get_schedules_by_airport,
 )
 from src.openweather_api import get_weather_by_coordinates
-from src.openaq_api import get_air_quality_nearby
-from src.processor import (
+from src.openaq_api      import get_air_quality_nearby
+from src.processor       import (
     build_airport_row,
     clean_dataframe,
     summarize_by_region,
     summarize_by_city,
-    summarize_causes
+    summarize_causes,
 )
 from src.visualization import (
     plot_delays_by_region,
     plot_delays_by_city,
     plot_causes,
     plot_environmental_risk_by_region,
-    plot_delay_severity_by_region
+    plot_delay_severity_by_region,
 )
+from src.gpu_analysis import apply_gpu_analysis
+
+# Detección MPI
+try:
+    from mpi4py import MPI
+    _MPI_COMM    = MPI.COMM_WORLD
+    _MPI_RANK    = _MPI_COMM.Get_rank()
+    _MPI_SIZE    = _MPI_COMM.Get_size()
+    _MPI_AVAILABLE = True
+except ImportError:
+    _MPI_AVAILABLE = False
+    _MPI_RANK = 0
+    _MPI_SIZE = 1
 
 
+# ---------------------------------------------------------------------------
+# Análisis estándar por aeropuerto (asyncio)
+# ---------------------------------------------------------------------------
 async def analyze_airport(session, airport):
     airport_iata = airport.get("iata_code")
     lat = airport.get("lat")
@@ -40,171 +72,154 @@ async def analyze_airport(session, airport):
 
     print(f"Analizando aeropuerto {airport_iata}...")
 
-    delays_task = get_delays_by_airport(session, airport_iata)
-    schedules_task = get_schedules_by_airport(session, airport_iata)
-    weather_task = get_weather_by_coordinates(session, lat, lon)
-    air_quality_task = get_air_quality_nearby(session, lat, lon)
-
     delays, schedules, weather, air_quality = await asyncio.gather(
-        delays_task,
-        schedules_task,
-        weather_task,
-        air_quality_task
+        get_delays_by_airport(session, airport_iata),
+        get_schedules_by_airport(session, airport_iata),
+        get_weather_by_coordinates(session, lat, lon),
+        get_air_quality_nearby(session, lat, lon),
     )
 
     airport_row = build_airport_row(
-        airport=airport,
-        delays=delays,
-        schedules=schedules,
-        weather=weather,
-        air_quality=air_quality
+        airport=airport, delays=delays,
+        schedules=schedules, weather=weather, air_quality=air_quality,
     )
 
     metadata = get_airport_metadata(airport_iata)
-
     city = (
-        airport.get("city")
-        or airport.get("city_name")
-        or metadata.get("city")
-        or airport.get("name")
-        or "Desconocida"
+        airport.get("city") or airport.get("city_name")
+        or metadata.get("city") or airport.get("name") or "Desconocida"
     )
-
     region = (
-        airport.get("state")
-        or airport.get("region")
-        or metadata.get("region")
-        or city
+        airport.get("state") or airport.get("region")
+        or metadata.get("region") or city
     )
 
     flight_rows = build_flight_rows(
-        airport=airport,
-        schedules=schedules,
-        weather=weather,
-        air_quality=air_quality,
-        city=city,
-        region=region
+        airport=airport, schedules=schedules,
+        weather=weather, air_quality=air_quality,
+        city=city, region=region,
     )
 
     return airport_row, flight_rows
 
 
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 async def main():
     os.makedirs("data/processed", exist_ok=True)
 
-    country_name = input("Escribe el nombre completo del país en español: ")
-    country_code = get_country_code(country_name)
+    # Proceso 0: pide input y obtiene aeropuertos
+    # Los demás procesos esperan en silencio
+    if _MPI_RANK == 0:
+        country_name = input("Escribe el nombre completo del pais en espanol: ")
+        country_code = get_country_code(country_name)
 
-    if country_code is None:
-        print("País no registrado en el diccionario del proyecto.")
-        print("Agrega el país en src/countries.py")
-        return
+        if country_code is None:
+            print("Pais no registrado. Agregalo en src/countries.py")
+            if _MPI_AVAILABLE:
+                _MPI_COMM.bcast(None, root=0)
+            return
 
-    print(f"País seleccionado: {country_name}")
-    print(f"Código ISO detectado: {country_code}")
+        print(f"Pais seleccionado : {country_name}")
+        print(f"Codigo ISO        : {country_code}")
 
-    async with aiohttp.ClientSession() as session:
-        airports = await get_airports_by_country(session, country_code)
-
-    #    print("\nEjemplo de aeropuerto recibido por AirLabs:")
-    #    if airports:
-    #        print(airports[0])
-    #    else:
-    #        print("AirLabs devolvió una lista vacía.")
+        async with aiohttp.ClientSession() as session:
+            airports = await get_airports_by_country(session, country_code)
 
         if not airports:
-            print("No se encontraron aeropuertos para ese país.")
+            print("No se encontraron aeropuertos.")
+            if _MPI_AVAILABLE:
+                _MPI_COMM.bcast(None, root=0)
             return
 
         airports = airports[:20]
+    else:
+        airports    = None
+        country_code = None
 
-        tasks = []
-
-        for airport in airports:
-            tasks.append(analyze_airport(session, airport))
-
-        results = await asyncio.gather(*tasks)
-
-    rows = []
-    flight_rows = []
-
-    for airport_row, airport_flight_rows in results:
-        if airport_row is not None:
-            rows.append(airport_row)
-
-        flight_rows.extend(airport_flight_rows)
-
-        if not rows:
-            print("No se pudieron procesar aeropuertos válidos.")
+    # Compartir datos con todos los procesos
+    if _MPI_AVAILABLE:
+        airports = _MPI_COMM.bcast(airports, root=0)
+        if airports is None:
             return
 
+    # ---------------------------------------------------------------------------
+    # Modo MPI distribuido
+    # ---------------------------------------------------------------------------
+    if _MPI_AVAILABLE and _MPI_SIZE > 1:
+        if _MPI_RANK == 0:
+            print(f"\n[MPI] Modo distribuido activado con {_MPI_SIZE} procesos.")
+
+        from src.mpi_processor import run_mpi_analysis
+        rows, flight_rows = run_mpi_analysis(airports)
+
+        if _MPI_RANK != 0:
+            return
+
+    # ---------------------------------------------------------------------------
+    # Modo estándar (asyncio)
+    # ---------------------------------------------------------------------------
+    else:
+        async with aiohttp.ClientSession() as session:
+            results = await asyncio.gather(
+                *[analyze_airport(session, ap) for ap in airports]
+            )
+
+        rows, flight_rows = [], []
+        for airport_row, airport_flight_rows in results:
+            if airport_row:
+                rows.append(airport_row)
+            flight_rows.extend(airport_flight_rows)
+
+    if not rows:
+        print("No se pudieron procesar aeropuertos validos.")
+        return
+
+    # ---------------------------------------------------------------------------
+    # GPU + análisis
+    # ---------------------------------------------------------------------------
     df = pd.DataFrame(rows)
     df = clean_dataframe(df)
-
     df = df[df["total_flights"] > 0]
-
     df = apply_gpu_analysis(df)
 
     output_path = "data/processed/analisis_retrasos_ambientales.csv"
     df.to_csv(output_path, index=False)
 
-    df_flights = pd.DataFrame(flight_rows)
-
+    df_flights         = pd.DataFrame(flight_rows)
     flight_output_path = "data/processed/vuelos_retrasados_cancelados.csv"
 
     if not df_flights.empty:
         df_flights.to_csv(flight_output_path, index=False)
-
         print("\nVuelos retrasados o cancelados:")
         pd.set_option("display.max_columns", None)
         pd.set_option("display.width", 200)
-
-        print(
-            df_flights[
-                [
-                    "flight_iata",
-                    "airline_iata",
-                    "dep_iata",
-                    "arr_iata",
-                    "event_type",
-                    "delay_minutes",
-                    "status",
-                    "dep_time",
-                    "dep_estimated",
-                    "dep_actual",
-                    "visibility",
-                    "wind_speed",
-                    "rain_1h",
-                    "weather_description",
-                    "city",
-                    "region",
-                    "probable_cause"
-                ]
-            ]
-        )
-
+        print(df_flights[[
+            "flight_iata", "airline_iata", "dep_iata", "arr_iata",
+            "event_type", "delay_minutes", "status", "dep_time",
+            "visibility", "wind_speed", "rain_1h", "weather_description",
+            "city", "region", "probable_cause",
+        ]])
         print("\nResumen de vuelos afectados por causa probable:")
-        event_summary = summarize_flight_events(df_flights)
-        print(event_summary)
-
+        print(summarize_flight_events(df_flights))
         print(f"\nArchivo de vuelos generado: {flight_output_path}")
     else:
-        print("\nNo se encontraron vuelos retrasados o cancelados en esta consulta.")
+        print("\nNo se encontraron vuelos retrasados o cancelados.")
 
     print("\nDatos unificados:")
     print(df)
 
-    print("\nResumen por región:")
-    region_summary = summarize_by_region(df)
-    print(region_summary)
+    print("\nResumen por region:")
+    print(summarize_by_region(df))
 
     print("\nResumen por ciudad:")
-    city_summary = summarize_by_city(df)
-    print(city_summary)
+    print(summarize_by_city(df))
 
     print("\nCausas probables:")
-    causes_summary = summarize_causes(df)
-    print(causes_summary)
+    print(summarize_causes(df))
+
+    print(f"\nArchivo generado: {output_path}")
 
     plot_delays_by_region(df)
     plot_delays_by_city(df)
@@ -212,9 +227,7 @@ async def main():
     plot_environmental_risk_by_region(df)
     plot_delay_severity_by_region(df)
 
-    print(f"\nArchivo generado: {output_path}")
-
-    input("\nPresiona Enter para cerrar las gráficas...")
+    input("\nPresiona Enter para cerrar las graficas...")
 
 
 if __name__ == "__main__":
