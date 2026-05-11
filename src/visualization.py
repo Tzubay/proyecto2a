@@ -38,3 +38,34 @@ def plot_causes(df):
     plt.tight_layout()
     plt.savefig("data/processed/causas_probables.png")
     plt.show()
+
+def plot_environmental_risk_by_region(df):
+    if "environmental_risk_score" not in df.columns:
+        return
+
+    data = df.groupby("region")["environmental_risk_score"].mean().sort_values(ascending=False)
+
+    plt.figure(figsize=(10, 5))
+    data.plot(kind="bar")
+    plt.title("Riesgo ambiental promedio por región")
+    plt.xlabel("Región")
+    plt.ylabel("Índice de riesgo ambiental")
+    plt.tight_layout()
+    plt.savefig("data/processed/riesgo_ambiental_por_region.png")
+    plt.show()
+
+
+def plot_delay_severity_by_region(df):
+    if "delay_severity_score" not in df.columns:
+        return
+
+    data = df.groupby("region")["delay_severity_score"].mean().sort_values(ascending=False)
+
+    plt.figure(figsize=(10, 5))
+    data.plot(kind="bar")
+    plt.title("Severidad de retrasos por región")
+    plt.xlabel("Región")
+    plt.ylabel("Índice de severidad")
+    plt.tight_layout()
+    plt.savefig("data/processed/severidad_retrasos_por_region.png")
+    plt.show()

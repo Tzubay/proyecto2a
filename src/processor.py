@@ -84,21 +84,37 @@ def clean_dataframe(df):
 
 
 def summarize_by_region(df):
-    return df.groupby("region").agg({
+    aggregation = {
         "total_flights": "sum",
         "total_delays": "sum",
         "average_delay_minutes": "mean",
         "delay_percent": "mean"
-    }).sort_values("total_delays", ascending=False)
+    }
+
+    if "environmental_risk_score" in df.columns:
+        aggregation["environmental_risk_score"] = "mean"
+
+    if "delay_severity_score" in df.columns:
+        aggregation["delay_severity_score"] = "mean"
+
+    return df.groupby("region").agg(aggregation).sort_values("total_delays", ascending=False)
 
 
 def summarize_by_city(df):
-    return df.groupby("city").agg({
+    aggregation = {
         "total_flights": "sum",
         "total_delays": "sum",
         "average_delay_minutes": "mean",
         "delay_percent": "mean"
-    }).sort_values("total_delays", ascending=False)
+    }
+
+    if "environmental_risk_score" in df.columns:
+        aggregation["environmental_risk_score"] = "mean"
+
+    if "delay_severity_score" in df.columns:
+        aggregation["delay_severity_score"] = "mean"
+
+    return df.groupby("city").agg(aggregation).sort_values("total_delays", ascending=False)
 
 
 def summarize_causes(df):

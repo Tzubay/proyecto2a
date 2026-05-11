@@ -3,3 +3,6 @@ pandas
 numpy
 matplotlib
 python-dotenv
+numba
+cupy-cuda12x
+mpi4py

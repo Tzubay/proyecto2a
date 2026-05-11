@@ -4,7 +4,31 @@ from src.analyzer import (
     estimate_flight_cause,
     get_flight_event_type
 )
+def calculate_environmental_risk_for_flight(weather, air_quality):
+    score = 0
 
+    rain_1h = weather.get("rain_1h", 0) or 0
+    visibility = weather.get("visibility", 10000) or 10000
+    wind_speed = weather.get("wind_speed", 0) or 0
+    pm25 = air_quality.get("pm25", 0) or 0
+    pm10 = air_quality.get("pm10", 0) or 0
+
+    if rain_1h > 0:
+        score += 2
+
+    if visibility < 5000:
+        score += 3
+
+    if wind_speed > 10:
+        score += 2
+
+    if pm25 > 35:
+        score += 1
+
+    if pm10 > 50:
+        score += 1
+
+    return score
 
 def build_flight_rows(airport, schedules, weather, air_quality, city, region):
     rows = []
@@ -54,11 +78,14 @@ def build_flight_rows(airport, schedules, weather, air_quality, city, region):
             "pm25": air_quality.get("pm25"),
             "pm10": air_quality.get("pm10"),
 
+            "environmental_risk_score": calculate_environmental_risk_for_flight(weather, air_quality),
+            
             "probable_cause": estimate_flight_cause(
                 flight=flight,
                 weather=weather,
                 air_quality=air_quality
             )
+            
         }
 
         rows.append(row)

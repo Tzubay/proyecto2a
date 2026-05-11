@@ -4,6 +4,7 @@ import pandas as pd
 import os
 from src.flight_report import build_flight_rows, summarize_flight_events
 from src.airport_metadata import get_airport_metadata
+from src.gpu_analysis import apply_gpu_analysis
 
 from src.countries import get_country_code
 from src.airlabs_api import (
@@ -23,7 +24,9 @@ from src.processor import (
 from src.visualization import (
     plot_delays_by_region,
     plot_delays_by_city,
-    plot_causes
+    plot_causes,
+    plot_environmental_risk_by_region,
+    plot_delay_severity_by_region
 )
 
 
@@ -140,6 +143,8 @@ async def main():
 
     df = df[df["total_flights"] > 0]
 
+    df = apply_gpu_analysis(df)
+
     output_path = "data/processed/analisis_retrasos_ambientales.csv"
     df.to_csv(output_path, index=False)
 
@@ -204,6 +209,8 @@ async def main():
     plot_delays_by_region(df)
     plot_delays_by_city(df)
     plot_causes(df)
+    plot_environmental_risk_by_region(df)
+    plot_delay_severity_by_region(df)
 
     print(f"\nArchivo generado: {output_path}")
 
