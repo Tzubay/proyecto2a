@@ -214,6 +214,8 @@ async def main():
 
     print(f"\nArchivo generado: {output_path}")
 
+    input("\nPresiona Enter para cerrar las gráficas...")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
