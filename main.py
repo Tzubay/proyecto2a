@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-main.py — Analizador de tráfico aéreo y condiciones ambientales
-===============================================================
-Ejecución con MPI (recomendada):
+Ejecución con MPI:
     mpiexec -n 4 python main.py
-
-Ejecución normal:
-    python main.py
 """
 
 import sys
@@ -59,9 +54,7 @@ except ImportError:
     _MPI_SIZE = 1
 
 
-# ---------------------------------------------------------------------------
 # Análisis estándar por aeropuerto (asyncio)
-# ---------------------------------------------------------------------------
 async def analyze_airport(session, airport):
     airport_iata = airport.get("iata_code")
     lat = airport.get("lat")
@@ -103,9 +96,7 @@ async def analyze_airport(session, airport):
     return airport_row, flight_rows
 
 
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 async def main():
     os.makedirs("data/processed", exist_ok=True)
 
@@ -144,9 +135,7 @@ async def main():
         if airports is None:
             return
 
-    # ---------------------------------------------------------------------------
     # Modo MPI distribuido
-    # ---------------------------------------------------------------------------
     if _MPI_AVAILABLE and _MPI_SIZE > 1:
         if _MPI_RANK == 0:
             print(f"\n[MPI] Modo distribuido activado con {_MPI_SIZE} procesos.")
@@ -157,28 +146,7 @@ async def main():
         if _MPI_RANK != 0:
             return
 
-    # ---------------------------------------------------------------------------
-    # Modo estándar (asyncio)
-    # ---------------------------------------------------------------------------
-    else:
-        async with aiohttp.ClientSession() as session:
-            results = await asyncio.gather(
-                *[analyze_airport(session, ap) for ap in airports]
-            )
-
-        rows, flight_rows = [], []
-        for airport_row, airport_flight_rows in results:
-            if airport_row:
-                rows.append(airport_row)
-            flight_rows.extend(airport_flight_rows)
-
-    if not rows:
-        print("No se pudieron procesar aeropuertos validos.")
-        return
-
-    # ---------------------------------------------------------------------------
     # GPU + análisis
-    # ---------------------------------------------------------------------------
     df = pd.DataFrame(rows)
     df = clean_dataframe(df)
     df = df[df["total_flights"] > 0]
