@@ -547,6 +547,440 @@ AIRPORT_METADATA = {
     "FKJ": {"city": "Fukui", "region": "Fukui", "country": "Japón"},
     "QFY": {"city": "Fukuyama", "region": "Hiroshima", "country": "Japón"},
     "QGU": {"city": "Gifu", "region": "Gifu", "country": "Japón"},
+    # =========================
+    # PORTUGAL (PT)
+    # =========================
+    "LIS": {"city": "Lisboa", "region": "Lisboa", "country": "Portugal"},
+    "OPO": {"city": "Porto", "region": "Porto", "country": "Portugal"},
+    "FAO": {"city": "Faro", "region": "Algarve", "country": "Portugal"},
+    "FNC": {"city": "Funchal", "region": "Madeira", "country": "Portugal"},
+    "PXO": {"city": "Porto Santo", "region": "Madeira", "country": "Portugal"},
+    "PDL": {"city": "Ponta Delgada", "region": "Azores", "country": "Portugal"},
+    "TER": {"city": "Terceira/Lajes", "region": "Azores", "country": "Portugal"},
+    "HOR": {"city": "Horta", "region": "Azores", "country": "Portugal"},
+    "PIX": {"city": "Pico", "region": "Azores", "country": "Portugal"},
+    "SMA": {"city": "Santa Maria", "region": "Azores", "country": "Portugal"},
+    "VRL": {"city": "Vila Real", "region": "Vila Real", "country": "Portugal"},
+    "BGC": {"city": "Bragança", "region": "Bragança", "country": "Portugal"},
+
+    # =========================
+    # PAÍSES BAJOS (NL)
+    # =========================
+    "AMS": {"city": "Ámsterdam", "region": "Holanda Septentrional", "country": "Países Bajos"},
+    "RTM": {"city": "Róterdam", "region": "Holanda Meridional", "country": "Países Bajos"},
+    "EIN": {"city": "Eindhoven", "region": "Brabante Septentrional", "country": "Países Bajos"},
+    "MST": {"city": "Maastricht", "region": "Limburgo", "country": "Países Bajos"},
+    "GRQ": {"city": "Groninga", "region": "Groninga", "country": "Países Bajos"},
+    "LEY": {"city": "Lelystad", "region": "Flevoland", "country": "Países Bajos"},
+
+    # =========================
+    # BÉLGICA (BE)
+    # =========================
+    "BRU": {"city": "Bruselas", "region": "Brabante Flamenco", "country": "Bélgica"},
+    "CRL": {"city": "Charleroi", "region": "Valonia", "country": "Bélgica"},
+    "ANR": {"city": "Amberes", "region": "Flandes", "country": "Bélgica"},
+    "OST": {"city": "Ostende", "region": "Flandes Occidental", "country": "Bélgica"},
+    "LGG": {"city": "Lieja", "region": "Valonia", "country": "Bélgica"},
+    "KJK": {"city": "Kortrijk", "region": "Flandes Occidental", "country": "Bélgica"},
+
+    # =========================
+    # SUIZA (CH)
+    # =========================
+    "ZRH": {"city": "Zúrich", "region": "Zúrich", "country": "Suiza"},
+    "GVA": {"city": "Ginebra", "region": "Ginebra", "country": "Suiza"},
+    "BSL": {"city": "Basilea", "region": "Basilea-Ciudad", "country": "Suiza"},
+    "BRN": {"city": "Berna", "region": "Berna", "country": "Suiza"},
+    "LUG": {"city": "Lugano", "region": "Tesino", "country": "Suiza"},
+    "SIR": {"city": "Sion", "region": "Valais", "country": "Suiza"},
+    "ACH": {"city": "Altenrhein", "region": "San Galo", "country": "Suiza"},
+
+    # =========================
+    # AUSTRIA (AT)
+    # =========================
+    "VIE": {"city": "Viena", "region": "Viena", "country": "Austria"},
+    "SZG": {"city": "Salzburgo", "region": "Salzburgo", "country": "Austria"},
+    "INN": {"city": "Innsbruck", "region": "Tirol", "country": "Austria"},
+    "GRZ": {"city": "Graz", "region": "Estiria", "country": "Austria"},
+    "LNZ": {"city": "Linz", "region": "Alta Austria", "country": "Austria"},
+    "KLU": {"city": "Klagenfurt", "region": "Carintia", "country": "Austria"},
+
+    # =========================
+    # IRLANDA (IE)
+    # =========================
+    "DUB": {"city": "Dublín", "region": "Leinster", "country": "Irlanda"},
+    "ORK": {"city": "Cork", "region": "Munster", "country": "Irlanda"},
+    "SNN": {"city": "Shannon", "region": "Munster", "country": "Irlanda"},
+    "NOC": {"city": "Knock", "region": "Connacht", "country": "Irlanda"},
+    "KIR": {"city": "Kerry", "region": "Munster", "country": "Irlanda"},
+    "CFN": {"city": "Donegal", "region": "Ulster", "country": "Irlanda"},
+    "WAT": {"city": "Waterford", "region": "Munster", "country": "Irlanda"},
+
+    # =========================
+    # NORUEGA (NO)
+    # =========================
+    "OSL": {"city": "Oslo", "region": "Akershus", "country": "Noruega"},
+    "TRF": {"city": "Sandefjord", "region": "Vestfold", "country": "Noruega"},
+    "BGO": {"city": "Bergen", "region": "Vestland", "country": "Noruega"},
+    "SVG": {"city": "Stavanger", "region": "Rogaland", "country": "Noruega"},
+    "TRD": {"city": "Trondheim", "region": "Trøndelag", "country": "Noruega"},
+    "TOS": {"city": "Tromsø", "region": "Troms", "country": "Noruega"},
+    "BOO": {"city": "Bodø", "region": "Nordland", "country": "Noruega"},
+    "AES": {"city": "Ålesund", "region": "Møre og Romsdal", "country": "Noruega"},
+    "KRS": {"city": "Kristiansand", "region": "Agder", "country": "Noruega"},
+    "HAU": {"city": "Haugesund", "region": "Rogaland", "country": "Noruega"},
+    "ALF": {"city": "Alta", "region": "Finnmark", "country": "Noruega"},
+    "KKN": {"city": "Kirkenes", "region": "Finnmark", "country": "Noruega"},
+
+    # =========================
+    # SUECIA (SE)
+    # =========================
+    "ARN": {"city": "Estocolmo", "region": "Estocolmo", "country": "Suecia"},
+    "BMA": {"city": "Estocolmo", "region": "Estocolmo", "country": "Suecia"},
+    "GOT": {"city": "Gotemburgo", "region": "Västra Götaland", "country": "Suecia"},
+    "MMX": {"city": "Malmö", "region": "Escania", "country": "Suecia"},
+    "NYO": {"city": "Nyköping", "region": "Södermanland", "country": "Suecia"},
+    "VST": {"city": "Västerås", "region": "Västmanland", "country": "Suecia"},
+    "LLA": {"city": "Luleå", "region": "Norrbotten", "country": "Suecia"},
+    "UME": {"city": "Umeå", "region": "Västerbotten", "country": "Suecia"},
+    "KRN": {"city": "Kiruna", "region": "Norrbotten", "country": "Suecia"},
+    "OSD": {"city": "Östersund", "region": "Jämtland", "country": "Suecia"},
+
+    # =========================
+    # DINAMARCA (DK)
+    # =========================
+    "CPH": {"city": "Copenhague", "region": "Región Capital", "country": "Dinamarca"},
+    "BLL": {"city": "Billund", "region": "Dinamarca Meridional", "country": "Dinamarca"},
+    "AAL": {"city": "Aalborg", "region": "Jutlandia Septentrional", "country": "Dinamarca"},
+    "AAR": {"city": "Aarhus", "region": "Jutlandia Central", "country": "Dinamarca"},
+    "RNN": {"city": "Rønne", "region": "Bornholm", "country": "Dinamarca"},
+    "EBJ": {"city": "Esbjerg", "region": "Dinamarca Meridional", "country": "Dinamarca"},
+    "SGD": {"city": "Sønderborg", "region": "Dinamarca Meridional", "country": "Dinamarca"},
+
+    # =========================
+    # FINLANDIA (FI)
+    # =========================
+    "HEL": {"city": "Helsinki", "region": "Uusimaa", "country": "Finlandia"},
+    "TMP": {"city": "Tampere", "region": "Pirkanmaa", "country": "Finlandia"},
+    "TKU": {"city": "Turku", "region": "Finlandia Propia", "country": "Finlandia"},
+    "OUL": {"city": "Oulu", "region": "Ostrobotnia del Norte", "country": "Finlandia"},
+    "RVN": {"city": "Rovaniemi", "region": "Laponia", "country": "Finlandia"},
+    "KTT": {"city": "Kittilä", "region": "Laponia", "country": "Finlandia"},
+    "IVL": {"city": "Ivalo", "region": "Laponia", "country": "Finlandia"},
+    "KUO": {"city": "Kuopio", "region": "Savonia del Norte", "country": "Finlandia"},
+    "VAA": {"city": "Vaasa", "region": "Ostrobotnia", "country": "Finlandia"},
+    "JOE": {"city": "Joensuu", "region": "Karelia del Norte", "country": "Finlandia"},
+
+    # =========================
+    # POLONIA (PL)
+    # =========================
+    "WAW": {"city": "Varsovia", "region": "Mazovia", "country": "Polonia"},
+    "WMI": {"city": "Modlin", "region": "Mazovia", "country": "Polonia"},
+    "KRK": {"city": "Cracovia", "region": "Pequeña Polonia", "country": "Polonia"},
+    "GDN": {"city": "Gdańsk", "region": "Pomerania", "country": "Polonia"},
+    "KTW": {"city": "Katowice", "region": "Silesia", "country": "Polonia"},
+    "WRO": {"city": "Wrocław", "region": "Baja Silesia", "country": "Polonia"},
+    "POZ": {"city": "Poznań", "region": "Gran Polonia", "country": "Polonia"},
+    "RZE": {"city": "Rzeszów", "region": "Subcarpacia", "country": "Polonia"},
+    "SZZ": {"city": "Szczecin", "region": "Pomerania Occidental", "country": "Polonia"},
+    "LCJ": {"city": "Łódź", "region": "Łódź", "country": "Polonia"},
+    "BZG": {"city": "Bydgoszcz", "region": "Cuyavia-Pomerania", "country": "Polonia"},
+    "LUZ": {"city": "Lublin", "region": "Lublin", "country": "Polonia"},
+
+    # =========================
+    # REPÚBLICA CHECA / CHEQUIA (CZ)
+    # =========================
+    "PRG": {"city": "Praga", "region": "Praga", "country": "República Checa"},
+    "BRQ": {"city": "Brno", "region": "Moravia Meridional", "country": "República Checa"},
+    "OSR": {"city": "Ostrava", "region": "Moravia-Silesia", "country": "República Checa"},
+    "KLV": {"city": "Karlovy Vary", "region": "Karlovy Vary", "country": "República Checa"},
+    "PED": {"city": "Pardubice", "region": "Pardubice", "country": "República Checa"},
+
+    # =========================
+    # GRECIA (GR)
+    # =========================
+    "ATH": {"city": "Atenas", "region": "Ática", "country": "Grecia"},
+    "SKG": {"city": "Tesalónica", "region": "Macedonia Central", "country": "Grecia"},
+    "HER": {"city": "Heraklion", "region": "Creta", "country": "Grecia"},
+    "CHQ": {"city": "Chania", "region": "Creta", "country": "Grecia"},
+    "RHO": {"city": "Rodas", "region": "Egeo Meridional", "country": "Grecia"},
+    "CFU": {"city": "Corfú", "region": "Islas Jónicas", "country": "Grecia"},
+    "JMK": {"city": "Mikonos", "region": "Egeo Meridional", "country": "Grecia"},
+    "JTR": {"city": "Santorini", "region": "Egeo Meridional", "country": "Grecia"},
+    "KGS": {"city": "Kos", "region": "Egeo Meridional", "country": "Grecia"},
+    "ZTH": {"city": "Zante", "region": "Islas Jónicas", "country": "Grecia"},
+    "PVK": {"city": "Preveza", "region": "Epiro", "country": "Grecia"},
+    "KLX": {"city": "Kalamata", "region": "Peloponeso", "country": "Grecia"},
+
+    # =========================
+    # TURQUÍA (TR)
+    # =========================
+    "IST": {"city": "Estambul", "region": "Estambul", "country": "Turquía"},
+    "SAW": {"city": "Estambul", "region": "Estambul", "country": "Turquía"},
+    "ESB": {"city": "Ankara", "region": "Ankara", "country": "Turquía"},
+    "ADB": {"city": "Esmirna", "region": "Esmirna", "country": "Turquía"},
+    "AYT": {"city": "Antalya", "region": "Antalya", "country": "Turquía"},
+    "DLM": {"city": "Dalaman", "region": "Muğla", "country": "Turquía"},
+    "BJV": {"city": "Bodrum", "region": "Muğla", "country": "Turquía"},
+    "ADA": {"city": "Adana", "region": "Adana", "country": "Turquía"},
+    "TZX": {"city": "Trabzon", "region": "Trabzon", "country": "Turquía"},
+    "ASR": {"city": "Kayseri", "region": "Kayseri", "country": "Turquía"},
+    "GZT": {"city": "Gaziantep", "region": "Gaziantep", "country": "Turquía"},
+    "DIY": {"city": "Diyarbakır", "region": "Diyarbakır", "country": "Turquía"},
+    "ERZ": {"city": "Erzurum", "region": "Erzurum", "country": "Turquía"},
+    "VAN": {"city": "Van", "region": "Van", "country": "Turquía"},
+
+    # =========================
+    # RUSIA (RU)
+    # =========================
+    "SVO": {"city": "Moscú", "region": "Moscú", "country": "Rusia"},
+    "DME": {"city": "Moscú", "region": "Moscú", "country": "Rusia"},
+    "VKO": {"city": "Moscú", "region": "Moscú", "country": "Rusia"},
+    "LED": {"city": "San Petersburgo", "region": "San Petersburgo", "country": "Rusia"},
+    "AER": {"city": "Sochi", "region": "Krasnodar", "country": "Rusia"},
+    "KZN": {"city": "Kazán", "region": "Tartaristán", "country": "Rusia"},
+    "SVX": {"city": "Ekaterimburgo", "region": "Sverdlovsk", "country": "Rusia"},
+    "OVB": {"city": "Novosibirsk", "region": "Novosibirsk", "country": "Rusia"},
+    "ROV": {"city": "Rostov del Don", "region": "Rostov", "country": "Rusia"},
+    "KRR": {"city": "Krasnodar", "region": "Krasnodar", "country": "Rusia"},
+    "UFA": {"city": "Ufá", "region": "Bashkortostán", "country": "Rusia"},
+    "KUF": {"city": "Samara", "region": "Samara", "country": "Rusia"},
+    "CEK": {"city": "Cheliábinsk", "region": "Cheliábinsk", "country": "Rusia"},
+    "VVO": {"city": "Vladivostok", "region": "Primorie", "country": "Rusia"},
+    "IKT": {"city": "Irkutsk", "region": "Irkutsk", "country": "Rusia"},
+
+    # =========================
+    # CHINA (CN)
+    # =========================
+    "PEK": {"city": "Pekín", "region": "Pekín", "country": "China"},
+    "PKX": {"city": "Pekín", "region": "Pekín", "country": "China"},
+    "PVG": {"city": "Shanghái", "region": "Shanghái", "country": "China"},
+    "SHA": {"city": "Shanghái", "region": "Shanghái", "country": "China"},
+    "CAN": {"city": "Guangzhou", "region": "Guangdong", "country": "China"},
+    "SZX": {"city": "Shenzhen", "region": "Guangdong", "country": "China"},
+    "CTU": {"city": "Chengdu", "region": "Sichuan", "country": "China"},
+    "TFU": {"city": "Chengdu", "region": "Sichuan", "country": "China"},
+    "XIY": {"city": "Xi'an", "region": "Shaanxi", "country": "China"},
+    "KMG": {"city": "Kunming", "region": "Yunnan", "country": "China"},
+    "HGH": {"city": "Hangzhou", "region": "Zhejiang", "country": "China"},
+    "NKG": {"city": "Nankín", "region": "Jiangsu", "country": "China"},
+    "WUH": {"city": "Wuhan", "region": "Hubei", "country": "China"},
+    "CKG": {"city": "Chongqing", "region": "Chongqing", "country": "China"},
+    "XMN": {"city": "Xiamen", "region": "Fujian", "country": "China"},
+    "TAO": {"city": "Qingdao", "region": "Shandong", "country": "China"},
+    "DLC": {"city": "Dalian", "region": "Liaoning", "country": "China"},
+    "TSN": {"city": "Tianjin", "region": "Tianjin", "country": "China"},
+    "CGO": {"city": "Zhengzhou", "region": "Henan", "country": "China"},
+    "CSX": {"city": "Changsha", "region": "Hunan", "country": "China"},
+
+    # =========================
+    # INDIA (IN)
+    # =========================
+    "DEL": {"city": "Nueva Delhi", "region": "Delhi", "country": "India"},
+    "BOM": {"city": "Mumbai", "region": "Maharashtra", "country": "India"},
+    "BLR": {"city": "Bangalore", "region": "Karnataka", "country": "India"},
+    "MAA": {"city": "Chennai", "region": "Tamil Nadu", "country": "India"},
+    "HYD": {"city": "Hyderabad", "region": "Telangana", "country": "India"},
+    "CCU": {"city": "Calcuta", "region": "Bengala Occidental", "country": "India"},
+    "AMD": {"city": "Ahmedabad", "region": "Gujarat", "country": "India"},
+    "COK": {"city": "Kochi", "region": "Kerala", "country": "India"},
+    "GOI": {"city": "Goa", "region": "Goa", "country": "India"},
+    "PNQ": {"city": "Pune", "region": "Maharashtra", "country": "India"},
+    "JAI": {"city": "Jaipur", "region": "Rajasthan", "country": "India"},
+    "LKO": {"city": "Lucknow", "region": "Uttar Pradesh", "country": "India"},
+    "TRV": {"city": "Thiruvananthapuram", "region": "Kerala", "country": "India"},
+    "IXC": {"city": "Chandigarh", "region": "Chandigarh", "country": "India"},
+    "BBI": {"city": "Bhubaneswar", "region": "Odisha", "country": "India"},
+    "GAU": {"city": "Guwahati", "region": "Assam", "country": "India"},
+    "ATQ": {"city": "Amritsar", "region": "Punjab", "country": "India"},
+
+    # =========================
+    # COREA DEL SUR (KR)
+    # =========================
+    "ICN": {"city": "Seúl/Incheon", "region": "Incheon", "country": "Corea del Sur"},
+    "GMP": {"city": "Seúl", "region": "Seúl", "country": "Corea del Sur"},
+    "PUS": {"city": "Busan", "region": "Busan", "country": "Corea del Sur"},
+    "CJU": {"city": "Jeju", "region": "Jeju", "country": "Corea del Sur"},
+    "TAE": {"city": "Daegu", "region": "Daegu", "country": "Corea del Sur"},
+    "CJJ": {"city": "Cheongju", "region": "Chungcheong del Norte", "country": "Corea del Sur"},
+    "KWJ": {"city": "Gwangju", "region": "Gwangju", "country": "Corea del Sur"},
+    "USN": {"city": "Ulsan", "region": "Ulsan", "country": "Corea del Sur"},
+    "RSU": {"city": "Yeosu", "region": "Jeolla del Sur", "country": "Corea del Sur"},
+    "YNY": {"city": "Yangyang", "region": "Gangwon", "country": "Corea del Sur"},
+
+    # =========================
+    # TAILANDIA (TH)
+    # =========================
+    "BKK": {"city": "Bangkok", "region": "Bangkok", "country": "Tailandia"},
+    "DMK": {"city": "Bangkok", "region": "Bangkok", "country": "Tailandia"},
+    "HKT": {"city": "Phuket", "region": "Phuket", "country": "Tailandia"},
+    "CNX": {"city": "Chiang Mai", "region": "Chiang Mai", "country": "Tailandia"},
+    "KBV": {"city": "Krabi", "region": "Krabi", "country": "Tailandia"},
+    "USM": {"city": "Koh Samui", "region": "Surat Thani", "country": "Tailandia"},
+    "HDY": {"city": "Hat Yai", "region": "Songkhla", "country": "Tailandia"},
+    "CEI": {"city": "Chiang Rai", "region": "Chiang Rai", "country": "Tailandia"},
+    "UTH": {"city": "Udon Thani", "region": "Udon Thani", "country": "Tailandia"},
+    "URT": {"city": "Surat Thani", "region": "Surat Thani", "country": "Tailandia"},
+    "PHS": {"city": "Phitsanulok", "region": "Phitsanulok", "country": "Tailandia"},
+    "UTP": {"city": "Rayong/Pattaya", "region": "Rayong", "country": "Tailandia"},
+
+    # =========================
+    # SINGAPUR (SG)
+    # =========================
+    "SIN": {"city": "Singapur", "region": "Singapur", "country": "Singapur"},
+    "XSP": {"city": "Seletar", "region": "Singapur", "country": "Singapur"},
+
+    # =========================
+    # MALASIA (MY)
+    # =========================
+    "KUL": {"city": "Kuala Lumpur", "region": "Selangor", "country": "Malasia"},
+    "SZB": {"city": "Subang", "region": "Selangor", "country": "Malasia"},
+    "PEN": {"city": "Penang", "region": "Penang", "country": "Malasia"},
+    "JHB": {"city": "Johor Bahru", "region": "Johor", "country": "Malasia"},
+    "LGK": {"city": "Langkawi", "region": "Kedah", "country": "Malasia"},
+    "KCH": {"city": "Kuching", "region": "Sarawak", "country": "Malasia"},
+    "BKI": {"city": "Kota Kinabalu", "region": "Sabah", "country": "Malasia"},
+    "MYY": {"city": "Miri", "region": "Sarawak", "country": "Malasia"},
+    "KBR": {"city": "Kota Bharu", "region": "Kelantan", "country": "Malasia"},
+    "TGG": {"city": "Kuala Terengganu", "region": "Terengganu", "country": "Malasia"},
+    "IPH": {"city": "Ipoh", "region": "Perak", "country": "Malasia"},
+    "KUA": {"city": "Kuantan", "region": "Pahang", "country": "Malasia"},
+
+    # =========================
+    # INDONESIA (ID)
+    # =========================
+    "CGK": {"city": "Yakarta", "region": "Banten", "country": "Indonesia"},
+    "HLP": {"city": "Yakarta", "region": "Yakarta", "country": "Indonesia"},
+    "DPS": {"city": "Denpasar", "region": "Bali", "country": "Indonesia"},
+    "SUB": {"city": "Surabaya", "region": "Java Oriental", "country": "Indonesia"},
+    "UPG": {"city": "Makassar", "region": "Sulawesi Meridional", "country": "Indonesia"},
+    "KNO": {"city": "Medan", "region": "Sumatra Septentrional", "country": "Indonesia"},
+    "YIA": {"city": "Yogyakarta", "region": "Yogyakarta", "country": "Indonesia"},
+    "JOG": {"city": "Yogyakarta", "region": "Yogyakarta", "country": "Indonesia"},
+    "BDO": {"city": "Bandung", "region": "Java Occidental", "country": "Indonesia"},
+    "SRG": {"city": "Semarang", "region": "Java Central", "country": "Indonesia"},
+    "LOP": {"city": "Lombok", "region": "Nusa Tenggara Occidental", "country": "Indonesia"},
+    "BPN": {"city": "Balikpapan", "region": "Kalimantan Oriental", "country": "Indonesia"},
+    "MDC": {"city": "Manado", "region": "Sulawesi Septentrional", "country": "Indonesia"},
+    "PKU": {"city": "Pekanbaru", "region": "Riau", "country": "Indonesia"},
+    "PLM": {"city": "Palembang", "region": "Sumatra Meridional", "country": "Indonesia"},
+
+    # =========================
+    # FILIPINAS (PH)
+    # =========================
+    "MNL": {"city": "Manila", "region": "Gran Manila", "country": "Filipinas"},
+    "CEB": {"city": "Cebú", "region": "Bisayas Centrales", "country": "Filipinas"},
+    "CRK": {"city": "Clark/Angeles", "region": "Luzón Central", "country": "Filipinas"},
+    "DVO": {"city": "Dávao", "region": "Dávao", "country": "Filipinas"},
+    "ILO": {"city": "Iloílo", "region": "Bisayas Occidentales", "country": "Filipinas"},
+    "PPS": {"city": "Puerto Princesa", "region": "Mimaropa", "country": "Filipinas"},
+    "KLO": {"city": "Kalibo", "region": "Bisayas Occidentales", "country": "Filipinas"},
+    "MPH": {"city": "Caticlan/Boracay", "region": "Bisayas Occidentales", "country": "Filipinas"},
+    "BCD": {"city": "Bacolod", "region": "Bisayas Occidentales", "country": "Filipinas"},
+    "ZAM": {"city": "Zamboanga", "region": "Zamboanga", "country": "Filipinas"},
+    "GES": {"city": "General Santos", "region": "Soccsksargen", "country": "Filipinas"},
+    "TAG": {"city": "Panglao/Bohol", "region": "Bisayas Centrales", "country": "Filipinas"},
+
+    # =========================
+    # VIETNAM (VN)
+    # =========================
+    "HAN": {"city": "Hanói", "region": "Hanói", "country": "Vietnam"},
+    "SGN": {"city": "Ciudad Ho Chi Minh", "region": "Ciudad Ho Chi Minh", "country": "Vietnam"},
+    "DAD": {"city": "Da Nang", "region": "Da Nang", "country": "Vietnam"},
+    "CXR": {"city": "Nha Trang", "region": "Khánh Hòa", "country": "Vietnam"},
+    "PQC": {"city": "Phú Quốc", "region": "Kiên Giang", "country": "Vietnam"},
+    "DLI": {"city": "Da Lat", "region": "Lâm Đồng", "country": "Vietnam"},
+    "HUI": {"city": "Huế", "region": "Thừa Thiên Huế", "country": "Vietnam"},
+    "VCA": {"city": "Cần Thơ", "region": "Cần Thơ", "country": "Vietnam"},
+    "VII": {"city": "Vinh", "region": "Nghệ An", "country": "Vietnam"},
+    "HPH": {"city": "Hai Phong", "region": "Hai Phong", "country": "Vietnam"},
+
+    # =========================
+    # AUSTRALIA (AU)
+    # =========================
+    "SYD": {"city": "Sídney", "region": "Nueva Gales del Sur", "country": "Australia"},
+    "MEL": {"city": "Melbourne", "region": "Victoria", "country": "Australia"},
+    "BNE": {"city": "Brisbane", "region": "Queensland", "country": "Australia"},
+    "PER": {"city": "Perth", "region": "Australia Occidental", "country": "Australia"},
+    "ADL": {"city": "Adelaida", "region": "Australia Meridional", "country": "Australia"},
+    "CBR": {"city": "Canberra", "region": "Territorio de la Capital Australiana", "country": "Australia"},
+    "OOL": {"city": "Gold Coast", "region": "Queensland", "country": "Australia"},
+    "CNS": {"city": "Cairns", "region": "Queensland", "country": "Australia"},
+    "DRW": {"city": "Darwin", "region": "Territorio del Norte", "country": "Australia"},
+    "HBA": {"city": "Hobart", "region": "Tasmania", "country": "Australia"},
+    "TSV": {"city": "Townsville", "region": "Queensland", "country": "Australia"},
+    "MCY": {"city": "Sunshine Coast", "region": "Queensland", "country": "Australia"},
+    "AVV": {"city": "Avalon/Geelong", "region": "Victoria", "country": "Australia"},
+    "LST": {"city": "Launceston", "region": "Tasmania", "country": "Australia"},
+    "ASP": {"city": "Alice Springs", "region": "Territorio del Norte", "country": "Australia"},
+
+    # =========================
+    # NUEVA ZELANDA (NZ)
+    # =========================
+    "AKL": {"city": "Auckland", "region": "Auckland", "country": "Nueva Zelanda"},
+    "WLG": {"city": "Wellington", "region": "Wellington", "country": "Nueva Zelanda"},
+    "CHC": {"city": "Christchurch", "region": "Canterbury", "country": "Nueva Zelanda"},
+    "ZQN": {"city": "Queenstown", "region": "Otago", "country": "Nueva Zelanda"},
+    "DUD": {"city": "Dunedin", "region": "Otago", "country": "Nueva Zelanda"},
+    "ROT": {"city": "Rotorua", "region": "Bay of Plenty", "country": "Nueva Zelanda"},
+    "NPE": {"city": "Napier/Hastings", "region": "Hawke's Bay", "country": "Nueva Zelanda"},
+    "NSN": {"city": "Nelson", "region": "Nelson", "country": "Nueva Zelanda"},
+    "PMR": {"city": "Palmerston North", "region": "Manawatū-Whanganui", "country": "Nueva Zelanda"},
+    "TRG": {"city": "Tauranga", "region": "Bay of Plenty", "country": "Nueva Zelanda"},
+    "IVC": {"city": "Invercargill", "region": "Southland", "country": "Nueva Zelanda"},
+
+    # =========================
+    # SUDÁFRICA (ZA)
+    # =========================
+    "JNB": {"city": "Johannesburgo", "region": "Gauteng", "country": "Sudáfrica"},
+    "CPT": {"city": "Ciudad del Cabo", "region": "Cabo Occidental", "country": "Sudáfrica"},
+    "DUR": {"city": "Durban", "region": "KwaZulu-Natal", "country": "Sudáfrica"},
+    "PLZ": {"city": "Port Elizabeth/Gqeberha", "region": "Cabo Oriental", "country": "Sudáfrica"},
+    "ELS": {"city": "East London", "region": "Cabo Oriental", "country": "Sudáfrica"},
+    "GRJ": {"city": "George", "region": "Cabo Occidental", "country": "Sudáfrica"},
+    "BFN": {"city": "Bloemfontein", "region": "Estado Libre", "country": "Sudáfrica"},
+    "HDS": {"city": "Hoedspruit", "region": "Limpopo", "country": "Sudáfrica"},
+    "KIM": {"city": "Kimberley", "region": "Cabo Septentrional", "country": "Sudáfrica"},
+    "MQP": {"city": "Nelspruit/Mbombela", "region": "Mpumalanga", "country": "Sudáfrica"},
+
+    # =========================
+    # EGIPTO (EG)
+    # =========================
+    "CAI": {"city": "El Cairo", "region": "El Cairo", "country": "Egipto"},
+    "SPX": {"city": "Guiza", "region": "Guiza", "country": "Egipto"},
+    "HRG": {"city": "Hurghada", "region": "Mar Rojo", "country": "Egipto"},
+    "SSH": {"city": "Sharm el-Sheij", "region": "Sinaí del Sur", "country": "Egipto"},
+    "LXR": {"city": "Luxor", "region": "Luxor", "country": "Egipto"},
+    "ASW": {"city": "Asuán", "region": "Asuán", "country": "Egipto"},
+    "HBE": {"city": "Alejandría", "region": "Alejandría", "country": "Egipto"},
+    "RMF": {"city": "Marsa Alam", "region": "Mar Rojo", "country": "Egipto"},
+    "ATZ": {"city": "Asyut", "region": "Asyut", "country": "Egipto"},
+    "TCP": {"city": "Taba", "region": "Sinaí del Sur", "country": "Egipto"},
+
+    # =========================
+    # MARRUECOS (MA)
+    # =========================
+    "CMN": {"city": "Casablanca", "region": "Casablanca-Settat", "country": "Marruecos"},
+    "RAK": {"city": "Marrakech", "region": "Marrakech-Safi", "country": "Marruecos"},
+    "AGA": {"city": "Agadir", "region": "Souss-Massa", "country": "Marruecos"},
+    "FEZ": {"city": "Fez", "region": "Fez-Mequinez", "country": "Marruecos"},
+    "TNG": {"city": "Tánger", "region": "Tánger-Tetuán-Alhucemas", "country": "Marruecos"},
+    "RBA": {"city": "Rabat", "region": "Rabat-Salé-Kenitra", "country": "Marruecos"},
+    "OUD": {"city": "Oujda", "region": "Oriental", "country": "Marruecos"},
+    "NDR": {"city": "Nador", "region": "Oriental", "country": "Marruecos"},
+    "EUN": {"city": "El Aaiún", "region": "El Aaiún-Saguía el Hamra", "country": "Marruecos"},
+    "ERH": {"city": "Errachidia", "region": "Draa-Tafilalet", "country": "Marruecos"},
+
+    # =========================
+    # EMIRATOS ÁRABES UNIDOS (AE)
+    # =========================
+    "DXB": {"city": "Dubái", "region": "Dubái", "country": "Emiratos Árabes Unidos"},
+    "DWC": {"city": "Dubái", "region": "Dubái", "country": "Emiratos Árabes Unidos"},
+    "AUH": {"city": "Abu Dabi", "region": "Abu Dabi", "country": "Emiratos Árabes Unidos"},
+    "SHJ": {"city": "Sharjah", "region": "Sharjah", "country": "Emiratos Árabes Unidos"},
+    "RKT": {"city": "Ras al-Jaima", "region": "Ras al-Jaima", "country": "Emiratos Árabes Unidos"},
+    "AAN": {"city": "Al Ain", "region": "Abu Dabi", "country": "Emiratos Árabes Unidos"},
+    "FJR": {"city": "Fujairah", "region": "Fujairah", "country": "Emiratos Árabes Unidos"},
+
 }
 
 
