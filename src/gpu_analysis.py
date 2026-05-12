@@ -16,23 +16,22 @@ except Exception:
     CUDA_AVAILABLE = False
 
 
+def get_gpu_name():
+    # detecta el nombre real de la GPU en lugar de hardcodearlo
+    try:
+        name = cp.cuda.runtime.getDeviceProperties(0)['name']
+        return name.decode() if isinstance(name, bytes) else name
+    except Exception:
+        return "GPU NVIDIA"
+
+
 def gpu_environment_available():
     return CUPY_AVAILABLE and CUDA_AVAILABLE
 
 
 def calculate_environmental_risk_cupy(df):
-    """
-    Calcula índice de riesgo ambiental usando CuPy en GPU.
-
-    Score:
-    lluvia > 0          → +2
-    visibilidad < 5000  → +3
-    viento > 10         → +2
-    PM2.5 > 35          → +1
-    PM10 > 50           → +1
-    """
     if not CUPY_AVAILABLE:
-        raise RuntimeError("CuPy no está disponible.")
+        raise RuntimeError("CuPy no esta disponible.")
 
     rain       = cp.asarray(df["rain_1h"].to_numpy(dtype=np.float32))
     visibility = cp.asarray(df["visibility"].to_numpy(dtype=np.float32))
@@ -51,21 +50,8 @@ def calculate_environmental_risk_cupy(df):
 
 
 def calculate_delay_severity_cupy(df):
-    """
-    Calcula severidad de retrasos usando CuPy en GPU.
-
-    Combina:
-    - porcentaje de retrasos
-    - retraso promedio
-    - riesgo ambiental
-
-    Resultado por aeropuerto:
-    0-2 → Baja
-    3-5 → Media
-    6-9 → Alta
-    """
     if not CUPY_AVAILABLE:
-        raise RuntimeError("CuPy no está disponible.")
+        raise RuntimeError("CuPy no esta disponible.")
 
     delay_percent      = cp.asarray(df["delay_percent"].to_numpy(dtype=np.float32))
     average_delay      = cp.asarray(df["average_delay_minutes"].to_numpy(dtype=np.float32))
@@ -73,17 +59,14 @@ def calculate_delay_severity_cupy(df):
 
     score = cp.zeros(len(df), dtype=cp.float32)
 
-    # Puntaje por porcentaje de retrasos
     score += cp.where(delay_percent >= 50, 3.0,
              cp.where(delay_percent >= 20, 2.0,
              cp.where(delay_percent >  0,  1.0, 0.0)))
 
-    # Puntaje por retraso promedio
     score += cp.where(average_delay >= 60, 3.0,
              cp.where(average_delay >= 20, 2.0,
              cp.where(average_delay >  0,  1.0, 0.0)))
 
-    # Puntaje por riesgo ambiental
     score += cp.where(environmental_risk >= 5, 3.0,
              cp.where(environmental_risk >= 3, 2.0,
              cp.where(environmental_risk >  0, 1.0, 0.0)))
@@ -101,15 +84,6 @@ def severity_label(score):
 
 
 def apply_gpu_analysis(df):
-    """
-    Aplica análisis GPU al DataFrame usando CuPy + Numba.
-
-    Agrega columnas:
-    - environmental_risk_score
-    - delay_severity_score
-    - delay_severity_label
-    - gpu_backend
-    """
     if df.empty:
         df["environmental_risk_score"] = []
         df["delay_severity_score"]     = []
@@ -118,14 +92,16 @@ def apply_gpu_analysis(df):
         return df
 
     try:
+        gpu_name = get_gpu_name()
+
         df["environmental_risk_score"] = calculate_environmental_risk_cupy(df)
         df["delay_severity_score"]     = calculate_delay_severity_cupy(df)
         df["delay_severity_label"]     = df["delay_severity_score"].apply(severity_label)
-        df["gpu_backend"]              = "CuPy + Numba CUDA"
-        print("\n[GPU] Analisis ejecutado con RTX 3070 - CuPy + Numba CUDA OK")
+        df["gpu_backend"]              = f"CuPy + Numba CUDA ({gpu_name})"
+        print(f"\n[GPU] Analisis ejecutado con {gpu_name} - CuPy + Numba CUDA OK")
 
     except Exception as error:
-        print("\nNo se pudo ejecutar GPU. Usando análisis en CPU.")
+        print("\nNo se pudo ejecutar GPU. Usando analisis en CPU.")
         print("Motivo:", error)
 
         df["environmental_risk_score"] = calculate_environmental_risk_cpu(df)
@@ -162,26 +138,17 @@ def calculate_delay_severity_cpu(df):
     for i in range(len(df)):
         score = 0.0
 
-        if delay_percent[i] >= 50:
-            score += 3.0
-        elif delay_percent[i] >= 20:
-            score += 2.0
-        elif delay_percent[i] > 0:
-            score += 1.0
+        if delay_percent[i] >= 50:    score += 3.0
+        elif delay_percent[i] >= 20:  score += 2.0
+        elif delay_percent[i] > 0:    score += 1.0
 
-        if average_delay[i] >= 60:
-            score += 3.0
-        elif average_delay[i] >= 20:
-            score += 2.0
-        elif average_delay[i] > 0:
-            score += 1.0
+        if average_delay[i] >= 60:    score += 3.0
+        elif average_delay[i] >= 20:  score += 2.0
+        elif average_delay[i] > 0:    score += 1.0
 
-        if environmental_risk[i] >= 5:
-            score += 3.0
-        elif environmental_risk[i] >= 3:
-            score += 2.0
-        elif environmental_risk[i] > 0:
-            score += 1.0
+        if environmental_risk[i] >= 5:  score += 3.0
+        elif environmental_risk[i] >= 3: score += 2.0
+        elif environmental_risk[i] > 0:  score += 1.0
 
         output[i] = score
 
